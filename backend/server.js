@@ -1,21 +1,21 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const complaintRoutes = require('./routers/complaintRouter'); // ✅ FIXED
+const connectDB = require('./middleware/db');
+const complaintRoutes = require('./routers/complaintRouter');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use('/api/complaints', complaintRoutes);
 
-const connectDB = require('./middleware/db');
-const PORT = process.env.PORT;
-
+// DB & Server Init
 connectDB();
 
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log(`Server started at ${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
